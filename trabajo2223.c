@@ -18,8 +18,10 @@ int main(){
 						fentrada = fopen("FICHEROS SUBIDOS.txt", "r");
 						    if(fentrada == NULL){
 							    printf("Error en la apertura del fichero\n");
-			return 0;
-		}
+			                    return 1;
+		                    }
+		    printf("El archivo se abrió correctamente\n");
+            fclose(fentrada);
 	    	break;
 	    case 3 :
 	    	printf("HAS ELEGIDO INSTRUCCIONES Y AYUDA\n");

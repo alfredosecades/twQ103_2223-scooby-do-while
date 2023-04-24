@@ -15,12 +15,12 @@ int main(){
 	    case 2:
 	    	printf("HAS ELEGIDO REVISAR FICHEROS SUBIDOS\n");
 	    	FILE * fentrada;
-						fentrada = fopen("FICHEROS SUBIDOS.txt", "r");
-						    if(fentrada == NULL){
-							    printf("Error en la apertura del fichero\n");
-			                    return 1;
-		                    }
-		    printf("El archivo se abrió correctamente\n");
+						fentrada = fopen("fichero1.txt", "r");
+						if(fentrada == NULL){
+							printf("Error en la apertura del fichero\n");
+							return 0;
+						}
+		    printf("El archivo se abrio correctamente\n");
             fclose(fentrada);
 	    	break;
 	    case 3 :

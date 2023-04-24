@@ -15,7 +15,7 @@ int main(){
 	    case 2:
 	    	printf("HAS ELEGIDO REVISAR FICHEROS SUBIDOS\n");
 	    	FILE * fentrada;
-						fentrada = fopen("ficherosguardados.txt", "r");
+						fentrada = fopen("FICHEROS SUBIDOS.txt", "r");
 						    if(fentrada == NULL){
 							    printf("Error en la apertura del fichero\n");
 			return 0;

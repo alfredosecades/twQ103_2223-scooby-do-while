@@ -1,11 +1,14 @@
-# [Título del trabajo]
+TRABAJO MEDIOAMBIENTE
 
-[Descripción breve del proyecto a realizar (2-3 frases).]
+...
 
-## Integrantes del equipo
+Integrantes del equipo
 
-[Nombres, apellidos, y usuario GitHub de los integrantes del equipo.]
+Aarón Nieto Iglesias
+Alfredo Secades Oliva
+Jorge Escobar Arenas
+Martin Nieto Iglesias
 
-## Objetivos del trabajo
+Objetivos del trabajo
 
 [Lista de los objetivos que se persiguen con el trabajo propuesto.]

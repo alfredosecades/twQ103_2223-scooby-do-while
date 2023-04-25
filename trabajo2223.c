@@ -7,7 +7,9 @@ int main(){
 	int opcionMenu;
 	char orden;
 	char nombrefic[20];
-	char texto[100];  
+	char texto[100]; 
+	float ph, conductividad, turbidez, coliformes;
+    char nfuentes[10]; 
 		  
 	do{
 	
@@ -35,17 +37,21 @@ int main(){
              
          
 	    case 2:
-	    	/*
 	    	printf("HAS ELEGIDO REVISAR FICHEROS SUBIDOS\n");
 	    	FILE * fentrada2;
-			fentrada2 = fopen("fichero1.txt", "w");
+			fentrada2 = fopen("fichero1.txt", "r");
 						if(fentrada2 == NULL){
 							printf("Error en la apertura del fichero\n");
 							return 0;
 						}
 		    printf("El archivo se abrio correctamente\n");
-            fclose(fentrada2);
-            */
+	
+						while	(fscanf(fentrada2,"%s %f %f %f %f", &nfuentes, &ph, &conductividad, &turbidez, &coliformes)!=EOF){
+						
+						     
+							printf("%s\t %2.f %2.f %2.f %2.f\n", nfuentes, ph, conductividad, turbidez, coliformes);
+							fflush(stdin);
+						}
 	    	break;
 	    case 3 :
 	    	printf("HAS ELEGIDO INSTRUCCIONES Y AYUDA\n");

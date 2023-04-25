@@ -6,7 +6,7 @@
 int main(){
 	int opcionMenu;
 	char orden;
-	char nombrefic[20];
+	char nombrefic[20], nombrefichero[20];
 	char texto[100]; 
 	float ph, conductividad, turbidez, coliformes;
     char nfuentes[10]; 
@@ -38,11 +38,13 @@ int main(){
          
 	    case 2:
 	    	printf("HAS ELEGIDO REVISAR FICHEROS SUBIDOS\n");
+	    	printf("introduce el nombre del fichero que quiere mirar\n");
+	    	scanf("%s",nombrefichero);
 	    	FILE * fentrada2;
-			fentrada2 = fopen("fichero1.txt", "r");
+			fentrada2 = fopen(nombrefichero, "r");
 						if(fentrada2 == NULL){
 							printf("Error en la apertura del fichero\n");
-							return 0;
+							return 1;
 						}
 		    printf("El archivo se abrio correctamente\n");
 	

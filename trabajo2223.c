@@ -19,7 +19,7 @@ int main(){
 
 	    case 1:
 	    	
-	    	printf("introduce como quieres llamar al archivo fichero\n");
+	    	printf("introduce como quieres llamar al archivo fichero (acuerdese de acabarlo con el formato .txt)\n");
 		  scanf("%s", nombrefic);
 		  
 		    FILE *fsalida;
@@ -33,6 +33,15 @@ int main(){
 	        fgets(texto, 100, stdin);	
 	        fclose(fsalida);
             printf("Se ha escrito el archivo correctamente.\n");
+            /*
+            printf("revison de lo que ha escrito\n");
+            while	(fscanf(fsalida,"%s %f %f %f %f", &nfuentes, &ph, &conductividad, &turbidez, &coliformes)!=EOF){
+				
+							printf("%s\t %2.f %2.f %2.f %2.f\n", nfuentes, ph, conductividad, turbidez, coliformes);
+							fflush(stdin);
+						}
+						fclose(fsalida);
+            */
             break;
              
          

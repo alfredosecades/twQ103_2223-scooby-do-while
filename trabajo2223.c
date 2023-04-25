@@ -2,8 +2,8 @@
 #include<string.h>
 
 //funciones
-void leerficherodatos(char[]);
-void escribirficherodatos(char []);
+void leerficherodatos(char[]);//solo valen para leer los ficheros con estructura %s %f %f %f %f
+void escribirficherodatos(char []);//solo valen para escribir los ficheros con estructura %s %f %f %f %f
 
 int main(){
 	int opcionMenu;

@@ -1,6 +1,6 @@
 # TRABAJO MEDIOAMBIENTE
 
-...
+Realizaremos un trabajo relacionado con las aguas de Madrid, teniendo en cuenta ciertas variables que aprendimos hace ya 2 años en la asignatura de medioambiente.
 
  ## Integrantes del equipo
 

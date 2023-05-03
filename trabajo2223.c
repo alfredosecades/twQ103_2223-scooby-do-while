@@ -89,7 +89,10 @@ int main(){
 	    	printf("HAS ELEGIDO INSTRUCCIONES Y AYUDA\n");
 		    printf("\n\n\n");
 		     do{
-		        printf("Utilice s y dspues enter para volver al menu principal\n");
+		        printf("Utilice s y despues enter para volver al menu principal\n");
+		        printf("Bienvenido a ... \nEste programa consiste en un algoritmo para guardar los ficheros de los datdos de diferentes analisis\n");
+		        printf("de agua.La opcion uno sirve para registrar nuevos ficheros con datos nuevos de experimentos nuevos.Al introducir un fichero nuevo");
+		        printf("se regsitrara en un fichero con el nombre dde todos los ficheros registrados.La opcion dos sirve para leer los datos de ficheros antiguos\n");
 		        fflush(stdin);
 		        scanf("%c",&salir);
 		    	}while(salir=='s'&&salir=='S');

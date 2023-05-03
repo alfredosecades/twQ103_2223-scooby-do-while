@@ -19,7 +19,7 @@ int main(){
 		  
 	do{
 	 
-	    printf("BIENVENIDO\n?QUE DESEA HACER?\n1.REGISTRAR NUEVO FICHERO\n2.REVISAR FICHEROS SUBIDOS\n3.MEDIA PH\n4.INSTRUCCIONES Y AYUDA\n5.SALIR\n");
+	    printf("BIENVENIDO\n?QUE DESEA HACER?\n1.REGISTRAR NUEVO FICHERO\n2.REVISAR FICHEROS SUBIDOS\n3.MEDIA PH\n4.ORDENAR PH\n5.SALIR\n");
 	    scanf("%d",&opcionMenu);
 	    switch (opcionMenu){
 
@@ -74,6 +74,7 @@ int main(){
 		    	}while(salir=='s'&&salir=='S');
 		    	if(salir=='s'&&salir=='S'){
 		    			break;
+		    		
 				}
 	    
 	    case 3 :
@@ -82,32 +83,36 @@ int main(){
 	    	printf("introduce el nombre del fichero que quiere mirar\n");
 	    	scanf("%s",nombrefichero);
 	    	mediaph(nombrefichero);
-	    	break;
+	    	
+	   	     do{
+		        printf("Utilice s y dspues enter para volver al menu principal\n");
+		        fflush(stdin);
+		        scanf("%c",&salir);
+		    	}while(salir=='s'&&salir=='S');
+		    	if(salir=='s'&&salir=='S'){
+		    			break;
+		    	
+				}
 	    case 4 :
 	    	abrirficherolista(lista);
 	    	printf("introduce el nombre del fichero que quiere mirar\n");
 	    	scanf("%s",nombrefichero);
-	    	//ordenarconductividad(nombrefichero);
-	    	break;
+	    	printf("se ordena la conductividad de menor a mayor\n");
+	    	ordenarconductividad(nombrefichero);
 	    	
-	    	
-	    	
-	    /*
-	    	printf("HAS ELEGIDO INSTRUCCIONES Y AYUDA\n");
-		    printf("\n\n\n");
-		     do{
+	    	do{
 		        printf("Utilice s y dspues enter para volver al menu principal\n");
-		        printf("Utilice s y despues enter para volver al menu principal\n");
-		        printf("Bienvenido a ... \nEste programa consiste en un algoritmo para guardar los ficheros de los datdos de diferentes analisis\n");
-		        printf("de agua.La opcion uno sirve para registrar nuevos ficheros con datos nuevos de experimentos nuevos.Al introducir un fichero nuevo");
-		        printf("se regsitrara en un fichero con el nombre dde todos los ficheros registrados.La opcion dos sirve para leer los datos de ficheros antiguos\n");
 		        fflush(stdin);
 		        scanf("%c",&salir);
 		    	}while(salir=='s'&&salir=='S');
 		    	if(salir=='s'&&salir=='S'){
 		    			break;
 				}
-			*/
+	    	
+	
+	    	
+	    	
+	   
 	    
 	    case 5:
 	    	printf("HASTA PRONTO\n");
@@ -132,15 +137,14 @@ void leerficherodatos(char nombrefichero[]){
 	 FILE *fsalida1;
 	        fsalida1 = fopen(nombrefichero,"r");
         	if (fsalida1 == NULL) {
-	    	    printf("Error, no puede leer el fichero.\n");
-	        	
+	    	    printf("Error, no puede leer el fichero.\n");	
 	        }
 	        
 	        fscanf(fsalida1,"%s %s %s %s %s",titulo, titulo2, titulo3, titulo4, titulo5);
 	        printf("%s %s %s %s %s\n",titulo, titulo2, titulo3, titulo4, titulo5);  
             while	(fscanf(fsalida1,"%s %f %f %f %f", nfuentes, &ph, &conductividad, &turbidez, &coliformes)!=EOF){
 				
-							printf("%s %2.f %2.f %2.f %2.f\n", nfuentes, ph, conductividad, turbidez, coliformes);
+							printf("%s %f %f %f %f\n", nfuentes, ph, conductividad, turbidez, coliformes);
 							fflush(stdin);
 						}
 						fclose(fsalida1);
@@ -162,10 +166,10 @@ void escribirficherodatos(char nombrefic[]){
         	printf("que desea introducir (recuerde que es nombre de la fuente, pH, conductividad, turbidez y coliformes)\n");
         	fflush(stdin);
 	        scanf("%s %f %f %f %f", nfuentes, &ph, &conductividad, &turbidez, &coliformes);
-			fprintf(fsalida,"%s\t %2.f %2.f %2.f %2.f\n", nfuentes, ph, conductividad, turbidez, coliformes);
+			fprintf(fsalida,"%s\t %f %f %f %f\n", nfuentes, ph, conductividad, turbidez, coliformes);
 			fclose(fsalida);
 }
-void abrirficherolista(char []){
+void abrirficherolista(char lista[]){
 	char nombrefic[20], nombrefichero[20],nficheros[20];
 	char texto[100], salir; 
 	float ph, conductividad, turbidez, coliformes;
@@ -204,7 +208,7 @@ float mediaph(char nombrefichero[]){
 	        printf("%s %s %s %s %s\n",titulo, titulo2, titulo3, titulo4, titulo5);  
             while	(fscanf(fsalida1,"%s %f %f %f %f", nfuentes, &ph, &conductividad, &turbidez, &coliformes)!=EOF){
 				
-							printf("%s %2.f %2.f %2.f %2.f\n", nfuentes, ph, conductividad, turbidez, coliformes);
+							printf("%s %f %f %f %f\n", nfuentes, ph, conductividad, turbidez, coliformes);
 							fflush(stdin);
                             contador++;
                             	media+=ph;
@@ -218,37 +222,63 @@ float mediaph(char nombrefichero[]){
             fflush(stdin);
 	return media;
 }
-/*
 void ordenarconductividad(char nombrefichero[]){
 	float ph, conductividad, turbidez, coliformes, media;
 	  char nfuentes[10];
-	  int contador=0, i,aux;
-	  int vector[50] ;
+	  int contador=0, i=0, j;
+	  float vector[50], aux;
+	  char vector2[50];
 	  char titulo[10], titulo2[10], titulo3[10], titulo4[10], titulo5[10];
 	
 	 FILE *fsalida1;
 	        fsalida1 = fopen(nombrefichero,"r");
         	if (fsalida1 == NULL) {
-	    	    printf("Error, no puede leer el fichero.\n");
-	        	
+	    	    printf("Error, no puede leer el fichero.\n");	
 	        }
 	        
 	        fscanf(fsalida1,"%s %s %s %s %s",titulo, titulo2, titulo3, titulo4, titulo5);
-	        printf("%s %s %s %s %s\n",titulo, titulo2, titulo3, titulo4, titulo5);  
-            while	(fscanf(fsalida1,"%s %f %f %f %f", nfuentes, &ph, &conductividad, &turbidez, &coliformes)!=EOF){
-				
-							printf("%s %2.f %2.f %2.f %2.f\n", nfuentes, ph, conductividad, turbidez, coliformes);
-							fflush(stdin);
-							conductividad=aux;
-						}
-						fclose(fsalida1);
-            
-            fflush(stdin);
+	        printf("%s\n", titulo2);  
+	        fflush(stdin);
+            while(fscanf(fsalida1,"%s %f %f %f %f", nfuentes, &ph ,&conductividad, &turbidez, &coliformes)!=EOF){
+		      vector[i]= ph;
+				contador++; 
+				i++;
+					}
+					fclose(fsalida1);
+					
+			for (i=0; i<contador-1;i++){
+                for(j=i+1;j<contador;j++){
+                        if(vector[i]>vector[j]){
+                                aux=vector[i];
+                                vector[i]=vector[j];
+                                vector[j]=aux;
+                        }
+                }
+        }
+        for(i=0;i<contador;i++){
+                printf("%f\n", vector[i]);
+        }
+
+				}
 	
 	
-						}
 					
 				
-*/
+ /*
+	    	printf("HAS ELEGIDO INSTRUCCIONES Y AYUDA\n");
+		    printf("\n\n\n");
+		     do{
+		        printf("Utilice s y dspues enter para volver al menu principal\n");
+		        printf("Utilice s y despues enter para volver al menu principal\n");
+		        printf("Bienvenido a ... \nEste programa consiste en un algoritmo para guardar los ficheros de los datdos de diferentes analisis\n");
+		        printf("de agua.La opcion uno sirve para registrar nuevos ficheros con datos nuevos de experimentos nuevos.Al introducir un fichero nuevo");
+		        printf("se regsitrara en un fichero con el nombre dde todos los ficheros registrados.La opcion dos sirve para leer los datos de ficheros antiguos\n");
+		        fflush(stdin);
+		        scanf("%c",&salir);
+		    	}while(salir=='s'&&salir=='S');
+		    	if(salir=='s'&&salir=='S'){
+		    			break;
+				}
+			*/
 
 

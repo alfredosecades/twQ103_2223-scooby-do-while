@@ -20,7 +20,13 @@ struct usuario {
 };
 typedef struct usuario Usuario;
 
-
+struct TAnalisis{
+	char nombre[200];
+	float ph;
+	int conductividad;
+	int turbidez;
+	int coliformes;
+};
 
 /* Funciones que manipulan el archivo de usuarios */
 char insertarUsuario(Usuario usuario);
@@ -36,8 +42,106 @@ char linea[MAX];
 //funciones
 void leerficherodatos(char[]);//solo valen para leer los ficheros con estructura %s %f %f %f %f
 void escribirficherodatos(char []);//solo valen para escribir los ficheros con estructura %s %f %f %f %f
+int ficheroStruct(struct TAnalisis fuentes[]);//pasa los datos del fichero a un vector de estructuras
 
 
+int banner();
+
+//INTRODUCIMOS LA FUNCIÓN DE UN BANNER FIJO 
+
+int banner_fijo();
+
+//Introducimos una funcion que ofrece informacion
+
+void normativa();
+
+//Introducimos otra funcion que ofrece informacion
+
+void aguascaracteristicasdefiniciones();
+
+//CREAMOS LA FUNCION QUE PERMITE AÑADIR UN NUEVO USUARIO
+
+
+void menuRegistrarUsuario();
+
+//CREAMOS LA FUNCION QUE DEJA VER LOS USUARIOS REGISTRADOS
+
+void menuListarUsuarios();
+
+
+
+//Introducimos la funcion que controla el menu
+
+void menuIniciarSesion();
+
+
+/* Retorna 1 si se registró el usuario en el archivo correctamente */
+char insertarUsuario(Usuario usuario);
+
+/* Retorna 1 si existe el nombre de usuario. Retorna el usuario buscado si existe */
+char existeUsuario(char nombreUsuario[], Usuario* usuario);
+
+Usuario *obtenerUsuarios(int *n);
+
+/* Retorna 1 o 0 si el usuario y password son correctos para un usuario en particular */
+char logear(char nombreUsuario[], char password[]);
+	
+int leerLinea(char *cad, int n);
+
+void leerClave(char *password);
+
+
+//Introducimos las funciones que nos dejan leer y escribir sobre el fichero de los usuarios
+
+
+void leerficherodatos(char nombrefichero[]);
+void escribirficherodatos(char nombrefic[]);
+	
+	
+menuSistema();
+
+
+
+
+//INTRODUCIMOS LA FUNCION QUE CODIFICA EL MENU PRINCIPAL
+
+
+
+
+
+void menuInicial();
+
+// CREAMOS EL PROGRAMA
+
+int main() {
+	struct TAnalisis fuentes[200];
+	int nelementos;
+	int i;
+	nelementos=ficheroStruct(fuentes);
+	menuInicial();
+	return 0;
+}
+
+int ficheroStruct(struct TAnalisis fuentes[]){
+	
+	int i ;
+	char titulo1[20], titulo2[20], titulo3[20], titulo4[20], titulo5[20];
+	FILE *fichero = fopen("fichero1.txt", "r");
+	
+	if (fichero == NULL){
+		printf ("Error al abrir el fichero\n");
+	}
+	
+	fscanf(fichero,"%s %s %s %s %s",titulo1, titulo2, titulo3, titulo4, titulo5);
+	        printf(" %s %s %s %s %s\n",titulo1, titulo2, titulo3, titulo4, titulo5);
+    while (fscanf(fichero, "%s %f %d %d %d", fuentes[i].nombre, &fuentes[i].ph, &fuentes[i].conductividad, &fuentes[i].turbidez, &fuentes[i].coliformes) !=EOF ) {
+        i++;
+    }
+    
+    fclose(fichero);
+    
+    return i;
+}
 int banner(){
 			printf("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
 	char banner[]={"*-*-*-*-*-*-*-*-*-*-*-{ KUNFONT }-*-*-*-*-*-{ KUNFONT }-*-*-*-*-{ KUNFONT }-*-*-*-*-*-*-*-*-*-*-*"};
@@ -70,18 +174,12 @@ int banner(){
 	printf("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
 	
 }
-
-//INTRODUCIMOS LA FUNCIÓN DE UN BANNER FIJO 
-
 int banner_fijo(){
 	printf("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
 	printf("*-*-*-*-*-*-*-*-*-*-{ KUNFONT }-*-*-*-*-*-*-*-*-*-{ KUNFONT }-*-*-*-*-*-*-*-*-*{ KUNFONT }-*-*-*-*-*-*\n");
 	printf("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
 	
 }
-
-//Introducimos una funcion que ofrece informacion
-
 void normativa(){
 			printf("\n");
 			printf("\n");
@@ -96,9 +194,6 @@ void normativa(){
 			printf("\n");
 	
 }
-
-//Introducimos otra funcion que ofrece informacion
-
 void aguascaracteristicasdefiniciones(){
 			printf("\n");
 			printf("\n");
@@ -113,10 +208,6 @@ void aguascaracteristicasdefiniciones(){
 			printf("\n");
 	
 }
-
-//CREAMOS LA FUNCION QUE PERMITE AÑADIR UN NUEVO USUARIO
-
-
 void menuRegistrarUsuario() {
 	Usuario usuario;
 	char nombreUsuario[MAX];
@@ -160,9 +251,6 @@ void menuRegistrarUsuario() {
 
 	} while (repite == 1);
 }
-
-//CREAMOS LA FUNCION QUE DEJA VER LOS USUARIOS REGISTRADOS
-
 void menuListarUsuarios() {
 	int numeroUsuarios;
 	Usuario *usuarios;
@@ -192,11 +280,6 @@ void menuListarUsuarios() {
 	usuarios = NULL;
 	getchar();
 }
-
-
-
-//Introducimos la funcion que controla el menu
-
 void menuIniciarSesion() {
 	
 	
@@ -234,9 +317,6 @@ void menuIniciarSesion() {
 		getchar();
 	}
 }
-
-
-/* Retorna 1 si se registró el usuario en el archivo correctamente */
 char insertarUsuario(Usuario usuario){
 	FILE *archivo;
 	char insercion = 0;
@@ -258,8 +338,6 @@ char insertarUsuario(Usuario usuario){
 
 	return insercion;
 }
-
-/* Retorna 1 si existe el nombre de usuario. Retorna el usuario buscado si existe */
 char existeUsuario(char nombreUsuario[], Usuario* usuario){
 	FILE *archivo;
 	char existe;
@@ -291,7 +369,6 @@ char existeUsuario(char nombreUsuario[], Usuario* usuario){
 
 	return existe;
 }
-
 Usuario *obtenerUsuarios(int *n) {
 	FILE *archivo;
 	Usuario usuario;
@@ -326,8 +403,6 @@ Usuario *obtenerUsuarios(int *n) {
  
 	return usuarios;
 }
-
-/* Retorna 1 o 0 si el usuario y password son correctos para un usuario en particular */
 char logear(char nombreUsuario[], char password[]) {
 	FILE *archivo;
 	char logeoExitoso;
@@ -360,7 +435,6 @@ char logear(char nombreUsuario[], char password[]) {
 
 	return logeoExitoso;
 }
-	
 int leerLinea(char *cad, int n)
 {
 	int i, c;
@@ -391,7 +465,6 @@ int leerLinea(char *cad, int n)
  
 	return 1;
 }
-
 void leerClave(char *password) {
 	char caracter;
 	int i = 0;
@@ -416,11 +489,6 @@ void leerClave(char *password) {
 		}
 	}
 }
-
-
-//Introducimos las funciones que nos dejan leer y escribir sobre el fichero de los usuarios
-
-
 void leerficherodatos(char nombrefichero[]){
 	
 	
@@ -460,8 +528,6 @@ void escribirficherodatos(char nombrefic[]){
 			fprintf(fsalida,"%s\t %2.f %2.f %2.f %2.f\n", nfuentes, ph, conductividad, turbidez, coliformes);
 			fclose(fsalida);
 }
-	
-	
 menuSistema(){
 		
 	int opcionMenu;
@@ -603,16 +669,6 @@ menuSistema(){
 		} while (repite == 1);
 	getchar();
 }	
-
-
-
-
-//INTRODUCIMOS LA FUNCION QUE CODIFICA EL MENU PRINCIPAL
-
-
-
-
-
 void menuInicial() {
 	
 	setlocale(LC_CTYPE,"Spanish");//CODIFICAMOS EL IDIOMA A ESPAÑOL PARA PODER UTILIZAR LETRAS COMO LA Ñ DE ESPAÑA
@@ -699,11 +755,3 @@ void menuInicial() {
 
 	} while (repite == 1);
 }
-
-// CREAMOS EL PROGRAMA
-
-int main() {
-	menuInicial();
-	return 0;
-}
-

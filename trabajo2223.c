@@ -39,8 +39,8 @@ void escribirficherodatos(char []);//solo valen para escribir los ficheros con e
 
 
 int banner(){
-	printf("--------------------------------------------------*\n");
-	char banner[]={"----{ KUNFONT }------{ KUNFONT }-----{ KUNFONT }----"};
+			printf("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
+	char banner[]={"*-*-*-*-*-*-*-*-*-*-*-{ KUNFONT }-*-*-*-*-*-{ KUNFONT }-*-*-*-*-{ KUNFONT }-*-*-*-*-*-*-*-*-*-*-*"};
 	unsigned short longitud, indice, espacio, repite, resto;
 
 	//A CONTINUACION SE PROGRAMA EL BANNER
@@ -66,8 +66,8 @@ int banner(){
 			printf("\b\b ");
 		printf("\b"); // se coloca al inicio del desplegado
 	}
-	printf("----{ KUNFONT }------{  KUNFONT  }-----{  KUNFONT  }----\n");
-	printf("----------------------------------------------------*-\n");
+	printf("*-*-*-*-*-*-*-*-*-*-{ KUNFONT }-*-*-*-*-*-*-*-*-*-{ KUNFONT }-*-*-*-*-*-*-*-*-*{ KUNFONT }-*-*-*-*-*-*\n");
+	printf("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
 	
 }
 
@@ -464,36 +464,34 @@ void escribirficherodatos(char nombrefic[]){
 	
 menuSistema(){
 		
-			int opcionMenu;
+	int opcionMenu;
 	char nombrefic[20], nombrefichero[20],nficheros[20];
 	char texto[100], salir; 
 	float ph, conductividad, turbidez, coliformes;
 		
 		int repite;
 		repite=1;
-		int farandul;
+		
 		int opcion2;	
 			do{
 	
 	system("cls");
+	system("color E0");
 	banner_fijo();
 	printf("\n     =========================================================================\n");
-	printf("\t\t\t     BIENVENIDO A KUNFONT, TU COMPARADOR DE AGUSA DE CONFIANZA\n");
-	printf("\t\t  Puede consultar y añadir: datos y fuentes del distrito de Lavapies\n");
-	printf("\t\t   Elija que desea realizar\n");
-
+	printf("\t\t\t     BIENVENIDO A KUNFONT, TU COMPARADOR DE AGUAS DE CONFIANZA\n");
+	printf("\t\t\tPuede consultar y añadir: datos y fuentes del distrito de Lavapies\n");
+	printf("\t\t\t                Elija que desea realizar\n");
 	printf("     =========================================================================\n");
-
-		printf("\n\t\tAqui va todo el contenido del sistema ;)");
 	
 		printf("\n\t\t[1].REGISTRAR NUEVO FICHERO CON DATOS DE FUENTES NUEVAS\n");
 		printf("\t\t[2]. CONSULTAR LOS DATOS DE AGUAS DEL DISTRITO DE LAVAPIES U OTROS FICHEROS YA CREADOS\n");
-			printf("\t\t  [3]. AYUDA E INSTRUCCIONES\n");
+		printf("\t\t[3]. AYUDA E INSTRUCCIONES\n");
+		printf("\t\t[4]. SALIR AL MENU PRINCIPAL Y CERRAR SESION\n");
 		printf("\n\t\tIngrese su opcion: [ ]\b\b");
 	
 		leerLinea(linea, MAX);
 		sscanf(linea, "%d", &opcion2);
-		farandul++;
 		
 		switch (opcion2) {
 			case 1:
@@ -503,7 +501,7 @@ menuSistema(){
 					printf("introduce como quieres llamar al archivo fichero (acuerdese de acabarlo con el formato .txt)\n");
 		    scanf("%s", nombrefic);
 		    escribirficherodatos(nombrefic);
-	        printf("comprobacion del fichero\n");
+	        printf("Comprobacion del fichero\n");
 		    leerficherodatos(nombrefic);
             
             //meter en un fichero llamado listadeficheros todos los ficheros introducidos;
@@ -520,19 +518,15 @@ menuSistema(){
 		    printf("\n\n\n");
     
             do{ //funcion de salir cuando quieras
-		        printf("Utilice s y dspues enter para volver al menu principal\n");
+		        printf("Utilice s y despues enter para volver al menu principal\n");
 		        fflush(stdin);
 		        scanf("%c",&salir);
 		    	}while(salir=='s'&&salir=='S');
 		    	if(salir=='s'&&salir=='S'){
 		    			break;
-				}		
-				farandul++;
-				repite=0;
-				break;
-
-
-
+				}break;
+				
+				
 			case 2:
 				system("cls");		
 				banner_fijo();
@@ -558,47 +552,55 @@ menuSistema(){
             
 	    	//leer el fichero que quieras
 	    	
-	    	printf("introduce el nombre del fichero que quiere mirar\n");
+	    	printf("Introduzca el nombre del fichero que quiere mirar:\n");
 	    	scanf("%s",nombrefichero);
 	    	leerficherodatos(nombrefichero);
 		    printf("\n\n\n");
 		     do{
-		        printf("Utilice s y dspues enter para volver al menu principal\n");
+		        printf("Utilice s y despues enter para volver al menu principal:\n");
 		        fflush(stdin);
 		        scanf("%c",&salir);
 		    	}while(salir=='s'&&salir=='S');
 		    	if(salir=='s'&&salir=='S'){
 		    			break;
-				}				
-				farandul++;
-				repite=0;
-				break;
+				} break;		
 				
 				
 			case 3 :
 		    	
-		    	farandul++;
-		    	repite=0;
-		    	system("cls");		
+		    	system("cls");
+				system ("color 87");		
 				banner_fijo();
 				
-	    		printf("HAS ELEGIDO INSTRUCCIONES Y AYUDA DENTRO\n");
-		    	printf("\n\n\n");
+	    		printf("\tHAS ELEGIDO INSTRUCCIONES Y AYUDA DENTRO\n");
+		    	printf("\n\n");
 		  	   do{
-		    	    printf("Utilice s y despues enter para volver al menu principal\n");
-			        printf("Bienvenido a Kunfont \nEste programa consiste en un algoritmo para guardar los ficheros de los datdos de diferentes analisis\n");
-			        printf("de agua.La opcion 6 sirve para registrar nuevos ficheros con datos nuevos de experimentos nuevos.Al introducir un fichero nuevo");
-		    	    printf("se regsitrara en un fichero con el nombre dde todos los ficheros registrados.La opcion 7 sirve para leer los datos de ficheros antiguos\n");
+			        printf("\tBienvenido a Kunfont!! \n\tEste programa consiste en un algoritmo para guardar los ficheros de los datdos de diferentes analisis\n");
+			        printf("\tde agua.La opcion 1 en el menu menu de Lavapies, sirve para registrar ficheros con datos de experimentos \n\t nuevos.Ademas, podemos consultar datos ya existentes en ficheros ya creados desde la opcion 2.Al introducir un fichero nuevo\n");
+		    	    printf("\teste se regsitrara en un fichero que almacena todos los ficheros previamente registrados.\n");
+		    	    printf("\n\n\n\tUtilice s y despues enter para volver al menu principal\n");
 		        	fflush(stdin);
 		   	     scanf("%c",&salir);
 		    		}while(salir=='s'&&salir=='S');
 		    		if(salir=='s'&&salir=='S'){
 		   		 			break;
-					}		
+					}break;
+			
+			case 4 :
 				
+				system("cls");
+				system("color 87");		
+				banner_fijo();
+				printf("\n");
+				printf("\tGRACIAS POR UTILIZAR NUESTRA APLICACION!!!\n");
+				printf("\tSu sesión en kunfont ha sido cerrada\n");
+				printf("\tPulse enter para volver al menu principal\n");
 				
+				repite= 0;		
+				break;
 				
-}} while (repite == 1);
+				}
+		} while (repite == 1);
 	getchar();
 }	
 
@@ -620,12 +622,12 @@ void menuInicial() {
 	int opcion = -1;
 	int farandul;
 	farandul=1;
-	system ("color e0");//CODIFICAMOS EL COLOR: AMARILLO PARA EL FONDO Y EL NEGRO PARA LAS LETRAS
+	system ("color B0");//CODIFICAMOS EL COLOR: AGUAMARINA AZUL PARA EL FONDO Y EL NEGRO PARA LAS LETRAS
 
 	
 	do {
 		system("cls");
-
+		system ("color B0");//Creamos que al cambiar de nuevo a la pantalla del menu, vuelva el color original
 		
 		if(farandul==1){
 			banner();
@@ -647,35 +649,40 @@ void menuInicial() {
 
 		switch (opcion) {
 			case 1:
-				system("cls");		
+				system("cls");
+				system ("color DF");		
 				banner_fijo();
 				menuListarUsuarios();
 				farandul++;
 				break;
 
 			case 2:
-				system("cls");		
+				system("cls");
+				system ("color DF");		
 				banner_fijo();
 				menuRegistrarUsuario();
 				farandul++;
 				break;
 
 			case 3:
-				system("cls");		
+				system("cls");
+				system ("color E0");		
 				banner_fijo();
 				menuIniciarSesion();
 				farandul++;
 				break;
 
 			case 4:
-				system("cls");		
+				system("cls");
+				system ("color 87");		
 				banner_fijo();
 				normativa();
 				system("pause");
 				break;
 				
 			case 5:
-				system("cls");		
+				system("cls");
+				system ("color 87");		
 				banner_fijo();
 				aguascaracteristicasdefiniciones();
 				system("pause");
@@ -699,3 +706,4 @@ int main() {
 	menuInicial();
 	return 0;
 }
+

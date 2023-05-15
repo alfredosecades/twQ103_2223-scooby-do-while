@@ -46,9 +46,9 @@ void escribirficherodatos(char []);//solo valen para escribir los ficheros con e
 int ficheroStruct(struct TAnalisis fuentes[]);//pasa los datos del fichero a un vector de estructuras
 
 void abrirficherolista(char []);
-float mediaph(char nombrefichero[]);
+float media(char nombrefichero[]);
 void ordenarconductividad(char nombrefichero[]);
-
+void ordenarph(char nombrefichero[]);
 
 
 int banner();
@@ -613,7 +613,7 @@ void ordenarconductividad(char nombrefichero[]){
 	        printf("%s\n", titulo2);  
 	        fflush(stdin);
             while(fscanf(fsalida1,"%s %f %f %f %f", nfuentes, &ph ,&conductividad, &turbidez, &coliformes)!=EOF){
-		      vector[i]= ph;
+		      vector[i]= conductividad;
 		      
 				contador++; 
 				i++;
@@ -637,7 +637,47 @@ void ordenarconductividad(char nombrefichero[]){
 
 				}
 	
+void ordenarph(char nombrefichero[]){
+	float ph, conductividad, turbidez, coliformes, media;
+	  char nfuentes[10];
+	  int contador=0, i=0, j;
+	  float vector[50], aux;
+	  int vector2[50];
+	  char titulo[10], titulo2[10], titulo3[10], titulo4[10], titulo5[10];
 	
+	 FILE *fsalida1;
+	        fsalida1 = fopen(nombrefichero,"r");
+        	if (fsalida1 == NULL) {
+	    	    printf("Error, no puede leer el fichero.\n");	
+	        }
+	        
+	        fscanf(fsalida1,"%s %s %s %s %s",titulo, titulo2, titulo3, titulo4, titulo5);
+	        printf("%s\n", titulo2);  
+	        fflush(stdin);
+            while(fscanf(fsalida1,"%s %f %f %f %f", nfuentes, &ph ,&conductividad, &turbidez, &coliformes)!=EOF){
+		      vector[i]= ph;
+		      
+				contador++; 
+				i++;
+			
+					}
+					fclose(fsalida1);
+			
+					
+			for (i=0; i<contador-1;i++){
+                for(j=i+1;j<contador;j++){
+                        if(vector[i]>vector[j]){
+                                aux=vector[i];
+                                vector[i]=vector[j];
+                                vector[j]=aux;
+                        }
+                }
+        }
+        for(i=0;i<contador;i++){
+                printf("%f %s\n", vector[i], vector2[i]);
+        }
+
+				}
 
 menuSistema(){
 		
@@ -664,9 +704,10 @@ menuSistema(){
 		printf("\n\t\t[1].REGISTRAR NUEVO FICHERO CON DATOS DE FUENTES NUEVAS\n");
 		printf("\t\t[2]. CONSULTAR LOS DATOS DE AGUAS DEL DISTRITO DE LAVAPIES U OTROS FICHEROS YA CREADOS\n");
 		printf("\t\t[3]. AYUDA E INSTRUCCIONES\n");
-		printf("\t\t[4]. ORDENAR FICHERO POR CONDUCTIVIDAD\n");		
-		printf("\t\t[5]. MEDIA DE LOS PARAMETROS DEL FICHERO\n");
-		printf("\t\t[6]. SALIR AL MENU PRINCIPAL Y CERRAR SESION\n");
+		printf("\t\t[4]. ORDENAR FICHERO POR CONDUCTIVIDAD\n");	
+		printf("\t\t[5]. ORDENAR FICHERO POR ACIDEZ\n");		
+		printf("\t\t[6]. MEDIA DE LOS PARAMETROS DEL FICHERO\n");
+		printf("\t\t[7]. SALIR AL MENU PRINCIPAL Y CERRAR SESION\n");
 		printf("\n\t\tIngrese su opcion: [ ]\b\b");
 	
 		leerLinea(linea, MAX);
@@ -773,7 +814,31 @@ menuSistema(){
 		    		if(salir=='s'&&salir=='S'){
 		   		 			break;
 					}break;
-            case 5 :
+			
+			case 5:
+				
+				
+		   	system("cls");
+			system ("color 87");		
+			banner_fijo();
+							
+	    	printf("\tHAS ELEGIDO ORDENAR POR ACIDEZ\n");
+	    	printf("\n\n");
+	    	do{
+									abrirficherolista(lista);
+	    	        printf("introduce el nombre del fichero que quiere mirar\n");
+	            	scanf("%s",nombrefichero);
+	            	printf("se ordenaran las fuentes de mas acida a mas basica\n");
+	    	        ordenarph(nombrefichero);
+	    	        printf("\n\n\n\tUtilice s y despues enter para volver al menu principal\n");
+		        	fflush(stdin);
+		   	     scanf("%c",&salir);
+		    		}while(salir=='s'&&salir=='S');
+		    		if(salir=='s'&&salir=='S'){
+		   		 			break;
+					}break;
+			
+            case 6:
 				
 				system("cls");
 				system ("color 87");		
@@ -796,29 +861,8 @@ menuSistema(){
 		   		 			break;
 					}break;
 
-	    	        
-	    	
-			case 6 :
-				
-				system("cls");
-				system ("color 87");		
-				banner_fijo();
-				
-	    		printf("\tHAS ELEGIDO INSTRUCCIONES Y AYUDA DENTRO\n");
-		    	printf("\n\n");
-		  	  do{
-			        printf("\tBienvenido a Kunfont!! \n\tEste programa consiste en un algoritmo para guardar los ficheros de los datdos de diferentes analisis\n");
-			        printf("\tde agua.La opcion 1 en el menu menu de Lavapies, sirve para registrar ficheros con datos de experimentos \n\t nuevos.Ademas, podemos consultar datos ya existentes en ficheros ya creados desde la opcion 2.Al introducir un fichero nuevo\n");
-		    	    printf("\teste se regsitrara en un fichero que almacena todos los ficheros previamente registrados.\n");
-		    	    printf("\n\n\n\tUtilice s y despues enter para volver al menu principal\n");
-		        	fflush(stdin);
-		   	     scanf("%c",&salir);
-		    		}while(salir=='s'&&salir=='S');
-		    		if(salir=='s'&&salir=='S'){
-		   		 			break;
-					}break;
 			
-			case 7 :
+			case 7:
 				
 				system("cls");
 				system("color 87");		

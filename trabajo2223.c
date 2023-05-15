@@ -42,7 +42,13 @@ char linea[MAX];
 //funciones
 void leerficherodatos(char[]);//solo valen para leer los ficheros con estructura %s %f %f %f %f
 void escribirficherodatos(char []);//solo valen para escribir los ficheros con estructura %s %f %f %f %f
+
 int ficheroStruct(struct TAnalisis fuentes[]);//pasa los datos del fichero a un vector de estructuras
+
+void abrirficherolista(char []);
+float mediaph(char nombrefichero[]);
+void ordenarconductividad(char nombrefichero[]);
+
 
 
 int banner();
@@ -528,11 +534,116 @@ void escribirficherodatos(char nombrefic[]){
 			fprintf(fsalida,"%s\t %2.f %2.f %2.f %2.f\n", nfuentes, ph, conductividad, turbidez, coliformes);
 			fclose(fsalida);
 }
+
+void abrirficherolista(char lista[]){
+	char nombrefic[20], nombrefichero[20],nficheros[20];
+	char texto[100], salir; 
+	float ph, conductividad, turbidez, coliformes;
+		
+		fflush(stdin);
+	    	printf("Estos son los ficheros creados\n");
+	    	
+	    	FILE *flista;
+	        flista = fopen("lista.txt","r");
+        	    if (flista == NULL) {
+	    	        printf("Error\n");
+	        	    	
+	            }
+	            fflush(stdin);
+            while(fscanf(flista,"%s",nficheros)!=EOF){
+							printf("%s\n",nficheros);
+							fflush(stdin);
+			}
+			fclose(flista);
+            fflush(stdin);
+}
+float media(char nombrefichero[]){
+	float ph, conductividad, turbidez, coliformes, media=0, media2=0, media3=0, media4=0, i;
+	  char nfuentes[10];
+	  int contador=0;
+	  char titulo[10], titulo2[10], titulo3[10], titulo4[10], titulo5[10];
+	
+	FILE *fsalida1;
+	        fsalida1 = fopen(nombrefichero,"r");
+        	if (fsalida1 == NULL) {
+	    	    printf("Error, no puede leer el fichero.\n");
+	        	
+	        }
+
+	        fscanf(fsalida1,"%s %s %s %s %s",titulo, titulo2, titulo3, titulo4, titulo5);
+	        printf("%s %s %s %s %s\n",titulo, titulo2, titulo3, titulo4, titulo5);  
+            while	(fscanf(fsalida1,"%s %f %f %f %f", nfuentes, &ph, &conductividad, &turbidez, &coliformes)!=EOF){
+				
+							printf("%s %f %f %f %f\n", nfuentes, ph, conductividad, turbidez, coliformes);
+							fflush(stdin);
+						fflush(stdin);
+                            contador++;
+                            	media+=ph;
+                            	media2+=conductividad;
+                            	media3+=turbidez;
+                            	media4+=coliformes;
+						}
+						fclose(fsalida1);
+		
+            
+            media=media/contador;
+            media2=media2/contador;
+            media3=media3/contador;
+            media4=media4/contador;
+			printf("media pH= %2.f\nmedia conductividad= %2.f\nmedia turbidez= %2.f\nmedia coliformes= %2.f\n",media, media2, media3, media4);
+            
+            fflush(stdin);
+	return media;
+}
+void ordenarconductividad(char nombrefichero[]){
+	float ph, conductividad, turbidez, coliformes, media;
+	  char nfuentes[10];
+	  int contador=0, i=0, j;
+	  float vector[50], aux;
+	  int vector2[50];
+	  char titulo[10], titulo2[10], titulo3[10], titulo4[10], titulo5[10];
+	
+	 FILE *fsalida1;
+	        fsalida1 = fopen(nombrefichero,"r");
+        	if (fsalida1 == NULL) {
+	    	    printf("Error, no puede leer el fichero.\n");	
+	        }
+	        
+	        fscanf(fsalida1,"%s %s %s %s %s",titulo, titulo2, titulo3, titulo4, titulo5);
+	        printf("%s\n", titulo2);  
+	        fflush(stdin);
+            while(fscanf(fsalida1,"%s %f %f %f %f", nfuentes, &ph ,&conductividad, &turbidez, &coliformes)!=EOF){
+		      vector[i]= ph;
+		      
+				contador++; 
+				i++;
+			
+					}
+					fclose(fsalida1);
+			
+					
+			for (i=0; i<contador-1;i++){
+                for(j=i+1;j<contador;j++){
+                        if(vector[i]>vector[j]){
+                                aux=vector[i];
+                                vector[i]=vector[j];
+                                vector[j]=aux;
+                        }
+                }
+        }
+        for(i=0;i<contador;i++){
+                printf("%f %s\n", vector[i], vector2[i]);
+        }
+
+				}
+	
+	
+
 menuSistema(){
 		
 	int opcionMenu;
 	char nombrefic[20], nombrefichero[20],nficheros[20];
-	char texto[100], salir; 
+	char texto[100], salir, lista[10]="lista.txt"; 
 	float ph, conductividad, turbidez, coliformes;
 		
 		int repite;
@@ -553,7 +664,9 @@ menuSistema(){
 		printf("\n\t\t[1].REGISTRAR NUEVO FICHERO CON DATOS DE FUENTES NUEVAS\n");
 		printf("\t\t[2]. CONSULTAR LOS DATOS DE AGUAS DEL DISTRITO DE LAVAPIES U OTROS FICHEROS YA CREADOS\n");
 		printf("\t\t[3]. AYUDA E INSTRUCCIONES\n");
-		printf("\t\t[4]. SALIR AL MENU PRINCIPAL Y CERRAR SESION\n");
+		printf("\t\t[4]. ORDENAR FICHERO POR CONDUCTIVIDAD\n");		
+		printf("\t\t[5]. MEDIA DE LOS PARAMETROS DEL FICHERO\n");
+		printf("\t\t[6]. SALIR AL MENU PRINCIPAL Y CERRAR SESION\n");
 		printf("\n\t\tIngrese su opcion: [ ]\b\b");
 	
 		leerLinea(linea, MAX);
@@ -598,32 +711,18 @@ menuSistema(){
 				banner_fijo();
 				
 					//leer el fichero con los fichero que existen 
-	    	printf("HAS ELEGIDO REVISAR LA INFORMACION DE AGUAS DE LAVAPIES\n");
-	    	fflush(stdin);
-	    	printf("Estos son los ficheros creados\n");
+	    	printf("HAS ELEGIDO REVISAR FICHEROS SUBIDOS\n");
 	    	
-	    	FILE *flista;
-	        flista = fopen("lista.txt","r");
-        	    if (flista == NULL) {
-	    	        printf("Error\n");
-	        	    return 0;	
-	            }
-	            fflush(stdin);
-            while(fscanf(flista,"%s",nficheros)!=EOF){
-							printf("%s\n",nficheros);
-							fflush(stdin);
-			}
-			fclose(flista);
-            fflush(stdin);
+	        abrirficherolista(lista);
             
 	    	//leer el fichero que quieras
 	    	
-	    	printf("Introduzca el nombre del fichero que quiere mirar:\n");
+	    	printf("introduce el nombre del fichero que quiere mirar\n");
 	    	scanf("%s",nombrefichero);
 	    	leerficherodatos(nombrefichero);
 		    printf("\n\n\n");
 		     do{
-		        printf("Utilice s y despues enter para volver al menu principal:\n");
+		        printf("Utilice s y dspues enter para volver al menu principal\n");
 		        fflush(stdin);
 		        scanf("%c",&salir);
 		    	}while(salir=='s'&&salir=='S');
@@ -651,8 +750,75 @@ menuSistema(){
 		    		if(salir=='s'&&salir=='S'){
 		   		 			break;
 					}break;
+			case 4:
+				
+				
+		    	system("cls");
+				system ("color 87");		
+				banner_fijo();
+				
+	    		printf("\tHAS ELEGIDO ORDENAR POR CONDUCTIVIDAD\n");
+		    	printf("\n\n");
+		    	do{
+				
+					abrirficherolista(lista);
+	    	        printf("introduce el nombre del fichero que quiere mirar\n");
+	            	scanf("%s",nombrefichero);
+	            	printf("se ordena la conductividad de menor a mayor\n");
+	    	        ordenarconductividad(nombrefichero);
+	    	        printf("\n\n\n\tUtilice s y despues enter para volver al menu principal\n");
+		        	fflush(stdin);
+		   	     scanf("%c",&salir);
+		    		}while(salir=='s'&&salir=='S');
+		    		if(salir=='s'&&salir=='S'){
+		   		 			break;
+					}break;
+            case 5 :
+				
+				system("cls");
+				system ("color 87");		
+				banner_fijo();
+				
+	    		printf("\tHAS ELEGIDO MEDIA DE LOS PARAMETROS\n");
+		    	printf("\n\n");
+		    	do{
+				
+					abrirficherolista(lista);
+	    	        printf("introduce el nombre del fichero que quiere mirar\n");
+	            	scanf("%s",nombrefichero);
+	            	printf("La media de las muestras del ph de este distrito son\n");
+	    	        media(nombrefichero);
+	    	        printf("\n\n\n\tUtilice s y despues enter para volver al menu principal\n");
+		        	fflush(stdin);
+		   	     scanf("%c",&salir);
+		    		}while(salir=='s'&&salir=='S');
+		    		if(salir=='s'&&salir=='S'){
+		   		 			break;
+					}break;
+
+	    	        
+	    	
+			case 6 :
+				
+				system("cls");
+				system ("color 87");		
+				banner_fijo();
+				
+	    		printf("\tHAS ELEGIDO INSTRUCCIONES Y AYUDA DENTRO\n");
+		    	printf("\n\n");
+		  	  do{
+			        printf("\tBienvenido a Kunfont!! \n\tEste programa consiste en un algoritmo para guardar los ficheros de los datdos de diferentes analisis\n");
+			        printf("\tde agua.La opcion 1 en el menu menu de Lavapies, sirve para registrar ficheros con datos de experimentos \n\t nuevos.Ademas, podemos consultar datos ya existentes en ficheros ya creados desde la opcion 2.Al introducir un fichero nuevo\n");
+		    	    printf("\teste se regsitrara en un fichero que almacena todos los ficheros previamente registrados.\n");
+		    	    printf("\n\n\n\tUtilice s y despues enter para volver al menu principal\n");
+		        	fflush(stdin);
+		   	     scanf("%c",&salir);
+		    		}while(salir=='s'&&salir=='S');
+		    		if(salir=='s'&&salir=='S'){
+		   		 			break;
+					}break;
 			
-			case 4 :
+			case 7 :
 				
 				system("cls");
 				system("color 87");		

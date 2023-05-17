@@ -50,7 +50,7 @@ void abrirficherolista(char []);
 float media(char nombrefichero[]);
 void ordenarconductividad(char nombrefichero[]);
 void ordenarph(char nombrefichero[]);
-
+int maxturbidez(struct TAnalisis fuentes[], struct TAnalisis maxturbidez);
 
 int banner();
 
@@ -122,6 +122,7 @@ void menuInicial();
 
 int main() {
 	struct TAnalisis fuentes[200];
+	struct TAnalisis maxturbidez;
 	int nelementos;
 	int i;
 	nelementos=ficheroStruct(fuentes);
@@ -148,6 +149,21 @@ int ficheroStruct(struct TAnalisis fuentes[]){
     fclose(fichero);
     
     return i;
+}
+int maxturbidez(struct TAnalisis fuentes[], struct TAnalisis maxturbidez){
+	
+	int i;
+	int nelementos;
+	nelementos=ficheroStruct(fuentes);
+	
+	maxturbidez=fuentes[0];
+	for (i=0; i<nelementos; i++){
+	if (fuentes[i].turbidez > maxturbidez.turbidez){
+		maxturbidez=fuentes[i];
+		
+	}
+	}
+
 }
 int banner(){
 			printf("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
@@ -681,7 +697,9 @@ void ordenarph(char nombrefichero[]){
 				}
 
 menuSistema(){
-		
+	
+	struct TAnalisis fuentes[200];
+	struct TAnalisis maxturbidez;	
 	int opcionMenu;
 	char nombrefic[20], nombrefichero[20],nficheros[20];
 	char texto[100], salir, lista[10]="lista.txt"; 
@@ -708,7 +726,8 @@ menuSistema(){
 		printf("\t\t[4]. ORDENAR FICHERO POR CONDUCTIVIDAD\n");	
 		printf("\t\t[5]. ORDENAR FICHERO POR ACIDEZ\n");		
 		printf("\t\t[6]. MEDIA DE LOS PARAMETROS DEL FICHERO\n");
-		printf("\t\t[7]. SALIR AL MENU PRINCIPAL Y CERRAR SESION\n");
+		printf("\t\t[7]. FUENTE CON MAYOR VALOR DE TURBIDEZ\n");
+		printf("\t\t[8]. SALIR AL MENU PRINCIPAL Y CERRAR SESION\n");
 		printf("\n\t\tIngrese su opcion: [ ]\b\b");
 	
 		leerLinea(linea, MAX);
@@ -862,8 +881,30 @@ menuSistema(){
 		   		 			break;
 					}break;
 
-			
 			case 7:
+				
+				
+		   	system("cls");
+			system ("color 87");		
+			banner_fijo();
+							
+	    	printf("\tHAS ELEGIDO VER FUENTE CON MAYOR VALOR DE TURBIDEZ\n");
+	    	printf("\n\n");
+	    	do{
+									abrirficherolista(lista);
+	    	        printf("introduce el nombre del fichero que quiere mirar\n");
+	            	scanf("%s",nombrefichero);
+	            	
+	    	        printf("\nFuente con mayor nivel de turbidez: %s       (%d   )", maxturbidez.nombre, maxturbidez.turbidez);
+	    	        printf("\n\n\n\tUtilice s y despues enter para volver al menu principal\n");
+		        	fflush(stdin);
+		   	     scanf("%c",&salir);
+		    		}while(salir=='s'&&salir=='S');
+		    		if(salir=='s'&&salir=='S'){
+		   		 			break;
+					}break;
+			
+			case 8:
 				
 				system("cls");
 				system("color 87");		

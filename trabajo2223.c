@@ -13,6 +13,7 @@
 #define LONGITUD 5
 #define MAX_INTENTOS 3
 
+
 /* Estructura de cuentas de usuario */
 struct usuario {
 	char nombre[MAX];

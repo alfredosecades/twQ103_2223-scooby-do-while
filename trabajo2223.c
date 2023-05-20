@@ -50,7 +50,7 @@ void abrirficherolista(char []);
 float media(char nombrefichero[]);
 void ordenarconductividad(char nombrefichero[]);
 void ordenarph(char nombrefichero[]);
-int maxturbidez(struct TAnalisis fuentes[], struct TAnalisis maxturbidez);
+struct TAnalisis maximaturbidez(struct TAnalisis fuentes[], struct TAnalisis maxturbidez);
 
 int banner();
 
@@ -150,7 +150,7 @@ int ficheroStruct(struct TAnalisis fuentes[]){
     
     return i;
 }
-int maxturbidez(struct TAnalisis fuentes[], struct TAnalisis maxturbidez){
+struct TAnalisis maximaturbidez(struct TAnalisis fuentes[], struct TAnalisis maxturbidez){
 	
 	int i;
 	int nelementos;
@@ -163,6 +163,8 @@ int maxturbidez(struct TAnalisis fuentes[], struct TAnalisis maxturbidez){
 		
 	}
 	}
+	
+	return maxturbidez;
 
 }
 int banner(){
@@ -699,7 +701,8 @@ void ordenarph(char nombrefichero[]){
 menuSistema(){
 	
 	struct TAnalisis fuentes[200];
-	struct TAnalisis maxturbidez;	
+	struct TAnalisis maxturbidez;
+	int max;	
 	int opcionMenu;
 	char nombrefic[20], nombrefichero[20],nficheros[20];
 	char texto[100], salir, lista[10]="lista.txt"; 
@@ -894,7 +897,7 @@ menuSistema(){
 									abrirficherolista(lista);
 	    	        printf("introduce el nombre del fichero que quiere mirar\n");
 	            	scanf("%s",nombrefichero);
-	            	
+	            	maxturbidez=maximaturbidez(fuentes, maxturbidez);
 	    	        printf("\nFuente con mayor nivel de turbidez: %s       (%d   )", maxturbidez.nombre, maxturbidez.turbidez);
 	    	        printf("\n\n\n\tUtilice s y despues enter para volver al menu principal\n");
 		        	fflush(stdin);
